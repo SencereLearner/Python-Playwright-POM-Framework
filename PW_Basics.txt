@@ -1,0 +1,61 @@
+1. Install
+pip install pytest-playwright
+playwright install (to install all the supported browsers)
+
+2. Import
+from playwright.sync_api import Page, expect
+import re
+
+3. Run sample test
+def test_one(page: Page):
+    page.goto('https://www.google.com')
+    search_field = page.get_by_role('combobox')
+    search_field.fill('cat')
+    page.keyboard.press('Enter')
+    expect(page).to_have_title(re.compile('^cat'))
+
+
+4. Elements search
+get_by_role - поиск по роли элемента, которую он выполняет на странице (роли)
+get_by_text() - поиск по видимому тексту
+get_by_label() - поиск по label искомого элемента
+get_by_placeholder() - поиск по плейсхолдеру элемента (атрибуту placeholder)
+get_by_alt_text() - поиск элемента, чаще всего картинки, по альтернативному тексту (атрибуту alt-text)
+get_by_title() - поиск элемента по атрибуту title
+get_by_test_id() - поиск элемента по атрибуту data-testid
+locator - поиск элемента по css или xpath селектору.
+
+
+5. Elements actions
+Действия с элементами
+click - клик
+dblclick - даблклик
+fill - ввод данных в поле
+press_sequentially - ввод текста по букве (эмуляция действий пользователя)
+check - кликнуть чекбокс
+press - нажать клавишу (клавиши)
+
+
+6. Elements check
+to_be_visible() Элемент видим на странице
+to_be_enabled() Элемент активен
+to_be_disabled() Элемент не активен
+to_have_text() Точная проверка текста, содержащегося в элементе
+to_contain_text() Проверка что часть текста соответствует ожидаемому тексту
+to_have_value() Поле для ввода содержит значение
+to_have_title() Проверка тайтла страницы
+to_have_url() Проверка урла
+to_be_focused() Элемент в фокусе
+to_be_checked() Чекбокс выбран
+to_be_editable() Элемент редактируемый
+to_be_empty() Контейнер пустой
+to_be_hidden() Элемент скрыт
+to_be_in_viewport() Элемент находится в отображаемой зоне страницы
+to_have_attribute() У элемента есть указанный атрибут
+to_have_class() У элемента есть указанный класс
+to_have_count() В списке находится указанное кличество элементов
+to_have_css() У элемента есть указанное CSS свойство
+to_have_id() У элемента есть указанный ID
+to_have_js_property() У элемента есть указанное JavaScript свойство
+to_have_values() Элемент содержит указанные значения
+to_be_ok() Сервер вернул статус код 200
