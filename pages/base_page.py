@@ -1,0 +1,59 @@
+import functools
+from time import time
+from playwright.sync_api import Page, expect, Dialog, Locator
+
+
+class BasePage:
+
+
+    def __init__(self, page: Page):
+        self.page = page
+
+    HEADER_TITLE = 'h1'
+
+
+    def open_page(self, url:str):
+        self.page.goto(url=url, wait_until="networkidle")
+
+    @property
+    def current_url(self) -> str:
+        return self.page.url
+
+    @property
+    def page_title(self) -> str:
+        return self.page.title()
+
+    @property
+    def header_text(self) -> str:
+        return self.page.locator(self.HEADER_TITLE).inner_text()
+
+    def find(self, locator) -> Locator:
+        return self.page.locator(locator)
+
+    def check_page_header_title_is(self, expected_text: str):
+        actual_text = self.page.locator(self.HEADER_TITLE).inner_text()
+        assert actual_text == expected_text, f"Expected header: '{expected_text}', but got: '{actual_text}'"
+
+    def hover_over_header_menu_element(self, menu_type: str):
+        self.find(f"//a[@title='{menu_type}']").hover()
+
+    def select_insurance_type(self, insurance_type_title: str):
+        self.find(f"//a[@title='{insurance_type_title}']").click()
+
+    def wait_for_element_to_load(self, locator: str, timeout: int = 5000) -> Locator:
+        element = self.page.locator(locator)
+        element.wait_for(state = 'visible', timeout = timeout)
+        return element
+
+    # turns a method into a static method, not requiring self as its first parameter and doesn’t need access to the instance or class at all
+    # used it here to not require self as the decorator could be used for both methods or functions
+    @staticmethod
+    def log_time(func):
+        @functools.wraps(func)  # keeps functions original metadata like .__name__ and returns a function name instead of wrapper name
+        def wrapper(*args, **kwargs):
+            start = time()
+            result = func(*args, **kwargs)
+            duration = time() - start
+            print(f"{func.__name__} executed in {duration:.2f}s")
+            return result
+        return wrapper
