@@ -4,7 +4,7 @@ from pages.base_page import BasePage
 
 
 @BasePage.log_time
-@allure.title("Navigate to Home page and login")
+@allure.title("Navigate to Home page and check login error message")
 @pytest.mark.smoke
 def test_negative_login(home_page, login_page):
     home_page.navigate_to_home_page()

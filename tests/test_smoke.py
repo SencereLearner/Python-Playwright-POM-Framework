@@ -6,9 +6,9 @@ from pages.base_page import BasePage
 
 
 @BasePage.log_time
-@allure.title("Verify Contact Us info")
+@allure.title("Verify Contact Us text")
 @pytest.mark.temp_test
-def test_navigate_to_selected_header_option(contact_us_page, base_page, home_page):
+def test_check_contact_us_text(contact_us_page, base_page, home_page):
     home_page.navigate_to_home_page()
     base_page.hover_over_header_menu_element("About Insureon")
     base_page.select_insurance_type("Contact Insureon")
