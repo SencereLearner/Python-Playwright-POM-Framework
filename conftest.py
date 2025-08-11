@@ -27,11 +27,10 @@ def contact_us_page(page: Page):
 load_dotenv()
 
 @pytest.fixture
-def valid_sensitive_creds():
-    print("Email from env:", os.getenv("VALID_EMAIL")) # to make sure .env loads correctly and has the data
+def login_sensitive_creds():
     return {
-        "login": os.getenv("VALID_EMAIL"),
-        "password": os.getenv("VALID_PASS")
+        "email": os.getenv("SENSITIVE_EMAIL"),
+        "password": os.getenv("SENSITIVE_PASSWORD")
     }
 
 # to run the tests: pytest -m temp_test -s or pytest -m-s

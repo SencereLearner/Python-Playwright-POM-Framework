@@ -15,12 +15,12 @@ class LoginPage(BasePage):
 
 
     @allure.step("Entering email")
-    def enter_email(self):
-        return self.email_address_input.fill('my@email.com')
+    def enter_email(self, email):
+        return self.email_address_input.fill(email)
 
     @allure.step("Entering password")
-    def enter_password(self):
-        return self.password_address_input.fill('login123')
+    def enter_password(self, password):
+        return self.password_address_input.fill(password)
 
     @allure.step("Clicking Login button")
     def click_login_button(self):

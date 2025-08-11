@@ -9,11 +9,11 @@ class BasePage:
     def __init__(self, page: Page):
         self.page = page
 
-    HEADER_TITLE = 'h1'
+    header_title = 'h1'
 
 
     def open_page(self, url:str):
-        self.page.goto(url=url, wait_until="networkidle")
+        self.page.goto(url=url)
 
     @property
     def current_url(self) -> str:
@@ -25,13 +25,13 @@ class BasePage:
 
     @property
     def header_text(self) -> str:
-        return self.page.locator(self.HEADER_TITLE).inner_text()
+        return self.page.locator(self.header_title).inner_text()
 
     def find(self, locator) -> Locator:
         return self.page.locator(locator)
 
     def check_page_header_title_is(self, expected_text: str):
-        actual_text = self.page.locator(self.HEADER_TITLE).inner_text()
+        actual_text = self.page.locator(self.header_title).inner_text()
         assert actual_text == expected_text, f"Expected header: '{expected_text}', but got: '{actual_text}'"
 
     def hover_over_header_menu_element(self, menu_type: str):
