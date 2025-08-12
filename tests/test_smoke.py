@@ -1,3 +1,5 @@
+import time
+
 import allure
 import pytest
 from playwright.sync_api import expect
@@ -6,7 +8,7 @@ from pages.base_page import BasePage
 
 @BasePage.log_time
 @allure.title("Verify Contact Us text")
-@pytest.mark.regression
+@pytest.mark.temp_test
 def test_check_contact_us_text(pages):
     pages['home_page'].navigate_to_home_page()
     pages['base_page'].hover_over_header_menu_element("About Insureon")
@@ -16,7 +18,7 @@ def test_check_contact_us_text(pages):
 
 @BasePage.log_time
 @allure.title("Verify business class is present")
-@pytest.mark.temp_test
+@pytest.mark.regression
 def test_bus_class_search(pages):
     pages['home_page'].navigate_to_home_page()
     pages['home_page'].click_get_quotes_button()
