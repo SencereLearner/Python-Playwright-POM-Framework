@@ -1,4 +1,5 @@
 import random
+import time
 
 import allure
 from playwright.sync_api import Page, expect
@@ -12,7 +13,7 @@ class HomePage(BasePage):
         super().__init__(page)
         self.home_page_url = 'https://www.insureon.com/'
         self.log_in_ele = self.page.get_by_role('link', name='Log In')
-        self.quotes_button_ele = self.page.locator('[data-test-id="navButtonCTA"]')
+        self.get_quotes_button_ele = self.page.locator('[data-test-id="navButtonCTA"]')
         self.warn_message = self.page.locator(".message_tauXM > strong")
 
     business_type_input_field = "//*[text()='Search for your business type']//following-sibling::div/input"
@@ -28,9 +29,7 @@ class HomePage(BasePage):
 
     @allure.step("Clicking Get Quotes button")
     def click_get_quotes_button(self):
-        print("Quotes button count:", self.quotes_button_ele.count())
-        print("Quotes button visible:", self.quotes_button_ele.is_visible())
-        self.quotes_button_ele.click()
+        self.wait_and_click(self.get_quotes_button_ele)
 
     @allure.step("Open Get Quotes menu and enter randomly selected bus class")
     def enter_bus_class(self):
