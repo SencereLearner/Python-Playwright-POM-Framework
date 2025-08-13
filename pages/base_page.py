@@ -3,6 +3,7 @@ from time import time
 from playwright.sync_api import Page, expect, Dialog, Locator
 from dotenv import load_dotenv
 import os
+import allure
 
 
 class BasePage:
@@ -76,5 +77,6 @@ class BasePage:
             result = func(*args, **kwargs)
             duration = time() - start
             print(f"{func.__name__} executed in {duration:.2f}s")
+            allure.attach(f"{func.__name__} executed in {duration:.2f}s", name="Execution Time")
             return result
         return wrapper

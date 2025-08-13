@@ -1,3 +1,4 @@
+from typing import Dict
 from pages.base_page import BasePage
 from pages.contact_us_page import ContactUsPage
 from pages.home_page import HomePage
@@ -7,7 +8,7 @@ from playwright.sync_api import Page
 
 
 @pytest.fixture()
-def pages(page: Page):
+def pages(page: Page) -> Dict[str, BasePage]:
     return {
         "login_page": LoginPage(page),
         "home_page": HomePage(page),
