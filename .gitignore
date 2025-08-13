@@ -1,4 +1,28 @@
 
-.venv/
 /Users/sergey/PycharmProjects/Python-Playwright-POM-Framework/test_demo.py
 /Users/sergey/PycharmProjects/Python-Playwright-POM-Framework/test_api_pw.py
+
+# Byte-compiled / cache
+__pycache__/
+*.py[cod]
+*.log
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# PyCharm project files
+.idea/
+
+# OS files
+.DS_Store
+
+# Test results or temporary files
+*.png
+*.jpg
+*.html
+allure-report/
+allure-results/
+*.iml
+
