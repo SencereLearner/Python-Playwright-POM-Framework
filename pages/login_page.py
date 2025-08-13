@@ -1,5 +1,4 @@
 from xml.sax.xmlreader import Locator
-
 import allure
 from playwright.sync_api import Page, expect
 from pages.base_page import BasePage

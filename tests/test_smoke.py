@@ -1,5 +1,4 @@
 import time
-
 import allure
 import pytest
 from playwright.sync_api import expect
@@ -9,20 +8,18 @@ from pages.base_page import BasePage
 @BasePage.log_time
 @allure.title("Verify Contact Us text")
 @pytest.mark.temp_test
-def test_contact_us_displays_expected_message(pages):
-    pages['home_page'].navigate_to_home_page()
-    time.sleep(3)
-    pages['base_page'].hover_over_header_menu_element("About Insureon")
-    pages['base_page'].select_insurance_type("Contact Insureon")
-    expect(pages['contact_us_page'].contact_us_ele).to_contain_text("For calls and emails, expect a response within 24 to 48 hours.")
+def test_contact_us_displays_expected_message(base_page, home_page, contact_us_page):
+    home_page.navigate_to_home_page()
+    base_page.hover_over_header_menu_element("About Insureon")
+    base_page.select_insurance_type("Contact Insureon")
+    expect(contact_us_page.contact_us_ele).to_contain_text("For calls and emails, expect a response within 24 to 48 hours.")
 
 
 @BasePage.log_time
 @allure.title("Verify business class is present")
 @pytest.mark.regression
-def test_bus_class_search(pages):
-    pages['home_page'].navigate_to_home_page()
-    time.sleep(3)
-    pages['home_page'].click_get_quotes_button()
-    pages['home_page'].enter_bus_class()
-    pages['home_page'].verify_warn_message()
+def test_bus_class_search(base_page, home_page):
+    home_page.navigate_to_home_page()
+    home_page.click_get_quotes_button()
+    home_page.enter_bus_class()
+    home_page.verify_warn_message()

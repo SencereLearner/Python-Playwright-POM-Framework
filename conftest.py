@@ -1,4 +1,3 @@
-from typing import Dict
 from pages.base_page import BasePage
 from pages.contact_us_page import ContactUsPage
 from pages.home_page import HomePage
@@ -8,14 +7,20 @@ from playwright.sync_api import Page
 
 
 @pytest.fixture()
-def pages(page: Page) -> Dict[str, BasePage]:
-    return {
-        "login_page": LoginPage(page),
-        "home_page": HomePage(page),
-        "base_page": BasePage(page),
-        "contact_us_page": ContactUsPage(page)
-    }
+def base_page(page):
+    return BasePage(page)
 
+@pytest.fixture()
+def home_page(page):
+    return HomePage(page)
+
+@pytest.fixture()
+def login_page(page):
+    return LoginPage(page)
+
+@pytest.fixture()
+def contact_us_page(page):
+    return ContactUsPage(page)
 
 # to run the tests: pytest -m temp_test -s or pytest -m-s
 # to run with allure: 1)rm -rf allure-results 2) pytest --alluredir=allure-results 3) allure serve allure-results

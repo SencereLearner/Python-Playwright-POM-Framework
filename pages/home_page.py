@@ -51,6 +51,7 @@ class HomePage(BasePage):
         print("Selected Business Class: ", selected_bus_class)
         self.wait_for_element_to_load(self.business_type_input_field).fill(selected_bus_class)
 
+    @allure.step("Verifying that Get Quotes error message is correct")
     def verify_warn_message(self) -> None:
         expect(self.warn_message).to_contain_text("Sorry, we couldn’t find")
 

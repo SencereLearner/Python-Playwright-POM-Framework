@@ -14,10 +14,10 @@ class BasePage:
 
     header_title = 'h1'
 
-    def header_menu_locator(self, menu_type: str):
+    def header_menu_locator(self, menu_type: str) -> str:
         return f"//a[@title='{menu_type}']"
 
-    def insurance_type_locator(self, insurance_type: str):
+    def insurance_type_locator(self, insurance_type: str) -> str:
         return f"//a[@title='{insurance_type}']"
 
     def open_page(self, url:str):
@@ -42,17 +42,21 @@ class BasePage:
         actual_text = self.page.locator(self.header_title).inner_text()
         assert actual_text == expected_text, f"Expected header: '{expected_text}', but got: '{actual_text}'"
 
+    @allure.step("Hovering over selected header menu element")
     def hover_over_header_menu_element(self, menu_type: str) -> None:
         self.find(self.header_menu_locator(menu_type)).hover()
 
+    @allure.step("Selecting insurance type")
     def select_insurance_type(self, insurance_type_title: str) -> None:
         self.find(self.insurance_type_locator(insurance_type_title)).click()
 
+    @allure.step("Waiting for element to load")
     def wait_for_element_to_load(self, locator: str, timeout: int = 5000) -> Locator:
         element = self.page.locator(locator)
         element.wait_for(state = 'visible', timeout = timeout)
         return element
 
+    @allure.step("Waiting for element and clicking when ready")
     def wait_and_click(self, locator, timeout=7000, pause_ms=500) -> None:
         locator.wait_for(state='visible', timeout=timeout)
         expect(locator).to_be_enabled(timeout=timeout)
