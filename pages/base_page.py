@@ -69,9 +69,9 @@ class BasePage:
         context = self.page.context
         # Force it to open in a new tab
         self.page.eval_on_selector(selector, "ele => ele.target = '_blank'")
-        with context.expect_page() as new_page:
+        with context.expect_page() as newly_opened_page:
             self.page.locator(selector).click()
-        new_tab = new_page.value
+        new_tab = newly_opened_page.value
         new_tab.wait_for_load_state()
         return new_tab
 
