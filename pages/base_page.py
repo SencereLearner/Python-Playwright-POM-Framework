@@ -14,10 +14,10 @@ class BasePage:
 
     header_title = 'h1'
 
-    def header_menu_locator(self, menu_type: str) -> str:
+    def header_menu_xpath(self, menu_type: str) -> str:
         return f"//a[@title='{menu_type}']"
 
-    def insurance_type_locator(self, insurance_type: str) -> str:
+    def insurance_type_xpath(self, insurance_type: str) -> str:
         return f"//a[@title='{insurance_type}']"
 
     def open_page(self, url:str):
@@ -44,11 +44,11 @@ class BasePage:
 
     @allure.step("Hovering over selected header menu element")
     def hover_over_header_menu_element(self, menu_type: str) -> None:
-        self.find(self.header_menu_locator(menu_type)).hover()
+        self.find(self.header_menu_xpath(menu_type)).hover()
 
     @allure.step("Selecting insurance type")
     def select_insurance_type(self, insurance_type_title: str) -> None:
-        self.find(self.insurance_type_locator(insurance_type_title)).click()
+        self.find(self.insurance_type_xpath(insurance_type_title)).click()
 
     @allure.step("Waiting for element to load")
     def wait_for_element_to_load(self, locator: str, timeout: int = 5000) -> Locator:
@@ -57,12 +57,23 @@ class BasePage:
         return element
 
     @allure.step("Waiting for element and clicking when ready")
-    def wait_and_click(self, locator, timeout=7000, pause_ms=500) -> None:
+    def wait_and_click(self, locator, timeout = 7000, pause_ms = 500) -> None:
         locator.wait_for(state='visible', timeout=timeout)
         expect(locator).to_be_enabled(timeout=timeout)
         self.page.wait_for_timeout(pause_ms)
         locator.scroll_into_view_if_needed()
         locator.click()
+
+    @allure.step("Opening link in a new tab")
+    def open_link_in_new_tab(self, selector):
+        context = self.page.context
+        # Force it to open in a new tab
+        self.page.eval_on_selector(selector, "ele => ele.target = '_blank'")
+        with context.expect_page() as new_page:
+            self.page.locator(selector).click()
+        new_tab = new_page.value
+        new_tab.wait_for_load_state()
+        return new_tab
 
     load_dotenv()
     def get_env_var(self, name: str) -> str:
@@ -81,6 +92,6 @@ class BasePage:
             result = func(*args, **kwargs)
             duration = time() - start
             print(f"{func.__name__} executed in {duration:.2f}s")
-            allure.attach(f"{func.__name__} executed in {duration:.2f}s", name="Execution Time")
+            allure.attach(f"{func.__name__} executed in {duration:.2f}s", name = "Execution Time")
             return result
         return wrapper

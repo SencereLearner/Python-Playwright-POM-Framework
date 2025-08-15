@@ -1,5 +1,6 @@
 from pages.base_page import BasePage
 from pages.contact_us_page import ContactUsPage
+from pages.footer_page import FooterPage
 from pages.home_page import HomePage
 from pages.login_page import LoginPage
 import pytest
@@ -21,6 +22,10 @@ def login_page(page):
 @pytest.fixture()
 def contact_us_page(page):
     return ContactUsPage(page)
+
+@pytest.fixture()
+def footer_page(page):
+    return FooterPage(page)
 
 # to run the tests: pytest -m temp_test -s or pytest -m-s
 # to run with allure: 1)rm -rf allure-results 2) pytest --alluredir=allure-results 3) allure serve allure-results
